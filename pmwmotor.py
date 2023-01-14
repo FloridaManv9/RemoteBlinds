@@ -1,6 +1,7 @@
 from time import sleep
 import pigpio
 import time
+import alarm.py
 
 DIR = 20     # Direction GPIO Pin
 STEP = 21    # Step GPIO Pin
@@ -27,35 +28,23 @@ RESOLUTION = {'Full': (0, 0, 0),
 for i in range(3):
     pi.write(MODE[i], RESOLUTION['Full'][i])
 
-# Set duty cycle and frequency
-# 500 pulses per second
-
+# Set Alarm Values
+alarmHour = 16
+alarmMin = 11
+alarmDay = 14
+openorclose = "open"
+int y
 
 named_tuple = time.localtime()  # get struct_time
 time_string = time.strftime("%m/%d/%Y, %H:%M:%S", named_tuple)
 
+y = Alarm(alarmDay, alarmMin, alarmHour, openorclose)
 print(named_tuple.tm_hour)
-kk = 1
-jj = 1
-z = 0
-print(kk)
-alarmHour = 16
-alarmMin = 11
 
-while kk == 1:
-    named_tuple = time.localtime()  # get struct_time
-    if (named_tuple.tm_min == alarmMin) & (named_tuple.tm_hour == alarmHour):
-        pi.set_PWM_dutycycle(STEP, 128)  # PWM 1/2 On 1/2 Off
-        pi.set_PWM_frequency(STEP, 500)
-        pi.write(DIR, pi.read(SWITCH))  # Set direction
-        
-        for z in range(10):
-            sleep(.1)
-            print("hi")
-        if z == 9:
-            kk = 0
+print(y)
 
-    sleep(1)
+
+
 
 pi.set_PWM_dutycycle(STEP, 0)  # PWM off
 pi.stop()
